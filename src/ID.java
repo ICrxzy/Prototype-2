@@ -4,4 +4,7 @@ public enum ID {
     Crate(),
     Bullet(),
     Enemy(),
+    Healthpack(),
+    Speed(),
+    FastFire(),
 }

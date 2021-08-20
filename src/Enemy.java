@@ -3,12 +3,15 @@ import java.util.Random;
 
 public class Enemy extends GameObject {
     private final Handler handler;
-    private final Random jenny = new Random();
-    private int health = 100;
+    private HUD hud;
 
-    public Enemy(int x, int y, ID id, Handler handler) {
+    private final Random jenny = new Random();
+    private int enemyHealth = 100;
+
+    public Enemy(int x, int y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
+        this.hud = hud;
     }
 
     @Override
@@ -32,12 +35,15 @@ public class Enemy extends GameObject {
             }
             if(tempObject.getId() == ID.Bullet){
                 if(getBounds().intersects(tempObject.getBounds())){
-                    health -= 25;
+                    enemyHealth -= 50;
                     handler.removeObject(tempObject);
                 }
             }
         }
-        if(health <= 0) handler.removeObject(this);
+        if(enemyHealth <= 0) {
+            hud.score += 100;
+            handler.removeObject(this);
+        }
     }
     @Override
     public void render(Graphics gfx) {

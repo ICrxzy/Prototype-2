@@ -2,12 +2,16 @@ import java.awt.*;
 
 public class Player extends GameObject {
     private final Handler handler;
-    private Game game;
+    private final Game game;
+    private final HUD hud;
 
-    public Player(int x, int y, ID id, Handler handler, Game game) {
+    //public int speed;
+
+    public Player(int x, int y, ID id, Handler handler, Game game, HUD hud) {
         super(x, y, id);
         this.handler = handler;
         this.game = game;
+        this.hud = hud;
     }
 
     private void collision(){
@@ -20,8 +24,17 @@ public class Player extends GameObject {
                 }
             if(tempObject.getId() == ID.Crate)
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    game.ammo += 10;
+                    game.ammo += hud.clamp(game.ammo, 2, 5);
+                    if(game.ammo >= 20) game.ammo = 20;
                     handler.removeObject(tempObject);
+                }
+            if(tempObject.getId() == ID.Enemy)
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    hud.health -= 1;
+                }
+            if(tempObject.getId() == ID.Speed)
+                if (getBounds().intersects(tempObject.getBounds())) {
+//                    speed += 5;
                 }
         }
     }

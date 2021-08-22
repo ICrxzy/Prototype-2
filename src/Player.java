@@ -7,8 +7,8 @@ public class Player extends GameObject {
 
     //public int speed;
 
-    public Player(int x, int y, ID id, Handler handler, Game game, HUD hud) {
-        super(x, y, id);
+    public Player(int x, int y, ID id, Handler handler, Game game, HUD hud, SpriteSheet sprite) {
+        super(x, y, id, sprite);
         this.handler = handler;
         this.game = game;
         this.hud = hud;
@@ -34,7 +34,18 @@ public class Player extends GameObject {
                 }
             if(tempObject.getId() == ID.Speed)
                 if (getBounds().intersects(tempObject.getBounds())) {
-//                    speed += 5;
+                    velX = velX + 2;
+                    handler.removeObject(tempObject);
+                }
+            if(tempObject.getId() == ID.Healthpack)
+                if(getBounds().intersects(tempObject.getBounds())){
+                    if(hud.health >= 100) //If the user has full health when touched
+                        hud.health = 100; //dont remove object and keep health at 100
+                    else { //but if the user is lower than max HP
+                        handler.removeObject(tempObject); //remove the healthpack
+                        hud.health = hud.health + 20; //add 20 to health.
+                    }
+                    if(hud.health >= 100) hud.health = 100; //check if health is max or overflowing, then set it to 100.
                 }
         }
     }

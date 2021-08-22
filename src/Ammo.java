@@ -1,8 +1,8 @@
 import java.awt.*;
 
-public class Crate extends GameObject {
-    public Crate(int x, int y, ID id) {
-        super(x, y, id);
+public class Ammo extends GameObject {
+    public Ammo(int x, int y, ID id, SpriteSheet sprite) {
+        super(x, y, id, sprite);
     }
 
     @Override
@@ -13,11 +13,11 @@ public class Crate extends GameObject {
     @Override
     public void render(Graphics gfx) {
         gfx.setColor(Color.pink);
-        gfx.fillRect(x, y, 16, 16);
+        gfx.fillRect(x, y, 32, 32);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x,y, 16, 16);
+        return new Rectangle(x,y, 32, 32);
     }
 }

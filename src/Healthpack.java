@@ -1,8 +1,8 @@
 import java.awt.*;
 
 public class Healthpack extends GameObject {
-    public Healthpack(int x, int y, ID id) {
-        super(x, y, id);
+    public Healthpack(int x, int y, ID id, SpriteSheet sprite) {
+        super(x, y, id, sprite);
     }
 
     @Override

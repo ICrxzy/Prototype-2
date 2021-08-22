@@ -1,17 +1,22 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Enemy extends GameObject {
     private final Handler handler;
-    private HUD hud;
+    private final HUD hud;
+    private final BufferedImage enemy;
 
     private final Random jenny = new Random();
     private int enemyHealth = 100;
 
-    public Enemy(int x, int y, ID id, Handler handler, HUD hud) {
-        super(x, y, id);
+    public Enemy(int x, int y, ID id, Handler handler, HUD hud, SpriteSheet sprite) {
+        super(x, y, id, sprite);
         this.handler = handler;
         this.hud = hud;
+
+        //enemySprites = new SpriteSheet(enemySprites);
+        enemy = sprite.grabImage(4, 1, 32, 32);
     }
 
     @Override
@@ -47,8 +52,7 @@ public class Enemy extends GameObject {
     }
     @Override
     public void render(Graphics gfx) {
-        gfx.setColor(Color.red);
-        gfx.fillRect(x, y, 32, 32);
+        gfx.drawImage(enemy, x, y, null);
     }
 
     @Override

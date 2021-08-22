@@ -3,8 +3,8 @@ import java.awt.*;
 public class Bullet extends GameObject {
     private final Handler handler;
 
-    public Bullet(int x, int y, ID id, Handler handler, int mouseX, int mouseY) {
-        super(x, y, id);
+    public Bullet(int x, int y, ID id, Handler handler, int mouseX, int mouseY, SpriteSheet sprite) {
+        super(x, y, id, sprite);
         this.handler = handler;
 
         velX = (mouseX - x) / 10;

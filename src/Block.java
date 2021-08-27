@@ -6,7 +6,7 @@ public class Block extends GameObject {
     public Block(int x, int y, ID id, SpriteSheet sprite) {
         super(x, y, id, sprite);
 
-        block = sprite.grabImage(1, 1, 32, 32);
+        block = sprite.grabImage(1, 2, 32, 32);
     }
 
     @Override

@@ -1,8 +1,13 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Ammo extends GameObject {
+    private final BufferedImage ammo;
+
     public Ammo(int x, int y, ID id, SpriteSheet sprite) {
         super(x, y, id, sprite);
+
+        ammo = sprite.grabImage(2, 1, 32, 32);
     }
 
     @Override
@@ -12,8 +17,7 @@ public class Ammo extends GameObject {
 
     @Override
     public void render(Graphics gfx) {
-        gfx.setColor(Color.pink);
-        gfx.fillRect(x, y, 32, 32);
+        gfx.drawImage(ammo, x, y, null);
     }
 
     @Override

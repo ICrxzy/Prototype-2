@@ -1,9 +1,11 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends GameObject {
     private final Handler handler;
     private final Game game;
     private final HUD hud;
+    private final BufferedImage player;
 
     //public int speed;
 
@@ -12,6 +14,7 @@ public class Player extends GameObject {
         this.handler = handler;
         this.game = game;
         this.hud = hud;
+        player = sprite.grabImage(1, 3, 32, 32);
     }
 
     private void collision(){
@@ -73,8 +76,7 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics gfx) {
         //Player Design
-        gfx.setColor(Color.green);
-        gfx.fillRect(x, y, 32, 32);
+            gfx.drawImage(player, x, y, null);
     }
 
     @Override

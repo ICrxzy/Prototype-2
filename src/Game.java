@@ -13,10 +13,12 @@ public class Game extends Canvas implements Runnable {
     private final int width = 1200, height = 600;
     public int FPS;
     private final BufferedImage floor;
+    private final Bullet bullet;
 
     //Other Variables
     public int ammo = 20;
     public int level1EnemyCount = 7;
+
 
     public static void main(String[] args) throws InterruptedException {
         new Game();
@@ -29,6 +31,7 @@ public class Game extends Canvas implements Runnable {
         start(); //Starts the thread
 
         handler = new Handler(); //Declares handler for objects
+
         camera = new Camera(0, 0); //declares the camera
         this.addKeyListener(new KeyInput(handler)); //Listen for keyboard input
         this.addMouseListener(new MouseInput(handler, camera, this)); //listen for mouse input
@@ -36,8 +39,8 @@ public class Game extends Canvas implements Runnable {
         BufferedImageLoader loader = new BufferedImageLoader(); //Declare the image loader
         BufferedImage level = loader.loadImage("/level.png"); //declare image to load as the level
         BufferedImage SpriteSheet = loader.loadImage("/spritesheet.png");
-
         sprites = new SpriteSheet(SpriteSheet);
+        bullet = new Bullet(16, 16, ID.Bullet, handler, 0, 0, sprites);
 
         floor = sprites.grabImage(2, 2, 32, 32);
         loadLevel(level);
@@ -92,11 +95,11 @@ public class Game extends Canvas implements Runnable {
                 int blue = (pixel) & 0xff;
                 //red == 0 && green == 0 && blue == 255
                 if(red == 0 && green == 0 && blue == 255) handler.addObject(new Block(xx*32, yy*32, ID.Block, sprites)); //blue square on image loaded will be a block.
-                if(red == 0 && green == 255 && blue == 0) handler.addObject(new Player(xx*32, yy*32, ID.Player, handler, this, hud, sprites));
+                if(red == 0 && green == 255 && blue == 0) handler.addObject(new Player(xx*32, yy*32, ID.Player, handler, this, hud, sprites, bullet));
                 if(red == 255 && blue == 0 && green == 0) handler.addObject(new Enemy(xx*32, yy*32, ID.Enemy, handler, hud, sprites, this));
                 if(red == 255 && green == 0 && blue == 255) handler.addObject(new Ammo(xx*32, yy*32, ID.Crate, sprites)); //Pink is ammo
                 if(red == 255 && green == 160 && blue == 0)handler.addObject(new Healthpack(xx*32, yy*32, ID.Healthpack, sprites)); //Orange is Healthpack
-                if(red == 255 && green == 255 && blue == 0) handler.addObject(new FastFire(xx*32, xx*32, ID.Speed, sprites)); //Yellow is Speed
+                if(red == 255 && green == 255 && blue == 0) handler.addObject(new Speed(xx*32, xx*32, ID.Speed, sprites)); //Yellow is Speed
             }
     }
 

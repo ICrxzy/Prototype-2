@@ -26,8 +26,6 @@ public class Enemy extends GameObject {
         x += velX;
         y += velY;
 
-        int choice = jenny.nextInt(10);
-
         for(int i = 0; i < handler.obj.size(); i++) {
             GameObject tempObject = handler.obj.get(i);
             if(tempObject.getId() == ID.Block) {
@@ -35,10 +33,8 @@ public class Enemy extends GameObject {
                     velX = -velX;
                     velY = -velY;
                 }
-                else if(choice == 0){
-                    velX = (jenny.nextInt(2 - -2) + -2);
-                    velY = (jenny.nextInt(2 - -2) + -2);
-                }
+                velX = (jenny.nextInt(4 - -4) + -4);
+                velY = (jenny.nextInt(4 - -4) + -4);
             }
             if(tempObject.getId() == ID.Bullet){
                 if(getBounds().intersects(tempObject.getBounds())){

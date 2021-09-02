@@ -5,15 +5,17 @@ public class Player extends GameObject {
     private final Handler handler;
     private final Game game;
     private final HUD hud;
+    private final Bullet bullet;
     private final BufferedImage player;
 
-    //public int speed;
+    private int speed = 2;
 
-    public Player(int x, int y, ID id, Handler handler, Game game, HUD hud, SpriteSheet sprite) {
+    public Player(int x, int y, ID id, Handler handler, Game game, HUD hud, SpriteSheet sprite, Bullet bullet) {
         super(x, y, id, sprite);
         this.handler = handler;
         this.game = game;
         this.hud = hud;
+        this.bullet = bullet;
         player = sprite.grabImage(1, 3, 32, 32);
     }
 
@@ -37,7 +39,11 @@ public class Player extends GameObject {
                 }
             if(tempObject.getId() == ID.Speed)
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    velX = velX + 2;
+                    if(speed >= 8){
+                        speed = 8;
+                    } else {
+                        speed += 2;
+                    }
                     handler.removeObject(tempObject);
                 }
             if(tempObject.getId() == ID.Healthpack)
@@ -50,6 +56,12 @@ public class Player extends GameObject {
                     }
                     if(hud.health >= 100) hud.health = 100; //check if health is max or overflowing, then set it to 100.
                 }
+            if(tempObject.getId() == ID.FastFire)
+                if(getBounds().intersects(tempObject.getBounds())){
+                    if(bullet.speed >= 20)
+                        bullet.speed = 20;
+                    else bullet.speed += 5;
+                }
         }
     }
 
@@ -61,16 +73,17 @@ public class Player extends GameObject {
         collision();
 
         //player movement
-        if(handler.isUp()) velY = -5;
+        if(speed >= 10) speed = 8;
+        if(handler.isUp()) velY = -speed;
         else if(!handler.isDown()) velY = 0;
 
-        if(handler.isDown()) velY = 5;
+        if(handler.isDown()) velY = speed;
         else if (!handler.isUp()) velY = 0;
 
-        if(handler.isRight()) velX = 5;
+        if(handler.isRight()) velX = speed;
         else if(!handler.isLeft()) velX = 0;
 
-        if(handler.isLeft()) velX = -5;
+        if(handler.isLeft()) velX = -speed;
         else if(!handler.isRight()) velX = 0;
     }
     @Override
